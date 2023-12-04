@@ -61,7 +61,7 @@ public class PlayerMovement : NetworkBehaviour
         currentSpeedTimer = topSpeedTimer;
         CreateParent();
 
-        //gM.OnUpdatePosition += UpdateMyPos;
+        //GameManager.Inst.OnUpdatePosition += UpdateMyPos;
     }
 
     public override void OnStartClient()
@@ -392,7 +392,7 @@ public class PlayerMovement : NetworkBehaviour
 
     private void OnDisable()
     {
-        gM.OnUpdatePosition -= UpdateMyPos;
+        //GameManager.Inst.OnUpdatePosition -= UpdateMyPos;
     }
 
 }

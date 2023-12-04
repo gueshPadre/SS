@@ -1267,7 +1267,9 @@ namespace Mirror
         {
             // only if server active
             if (!active)
+            {
                 return false;
+            }
 
             // find all NetworkIdentities in the scene.
             // all of them are disabled because of NetworkScenePostProcess.

@@ -23,6 +23,11 @@ public class GameManager : NetworkBehaviour
 
     }
 
+    private void OnEnable()
+    {
+        Debug.Log($"GameManager just became active");
+    }
+
     void Update()
     {
         UpdatePlayersPositions();

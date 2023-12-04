@@ -415,11 +415,11 @@ namespace Mirror
         /// <summary>Starts the client, connects it to the server with networkAddress.</summary>
         public void StartClient()
         {
-            //if (NetworkClient.active)
-            //{
-            //    Debug.LogWarning("Client already started.");
-            //    return;
-            //}
+            if (NetworkClient.active)
+            {
+                Debug.LogWarning("Client already started.");
+                return;
+            }
 
             mode = NetworkManagerMode.ClientOnly;
 

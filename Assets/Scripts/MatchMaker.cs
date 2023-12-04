@@ -84,7 +84,6 @@ public class MatchMaker : MonoBehaviour
         }
 
         // Accept incoming client connections.
-        Debug.Log($"In Matchmaking, Am I Listening?: {hostDriver.Listening}");
         NetworkConnection incomingConnection;
         while ((incomingConnection = hostDriver.Accept()) != default(NetworkConnection))
         {
@@ -136,18 +135,19 @@ public class MatchMaker : MonoBehaviour
         //{
         //    Debug.Log($"Region ID: {region.Id} and Description");
         //}
-        hostAlloc = await RelayService.Instance.CreateAllocationAsync(4, "europe-central2");
+        //hostAlloc = await RelayService.Instance.CreateAllocationAsync(4, "europe-central2");
 
-        serverConnections = new NativeList<NetworkConnection>(4, Allocator.Persistent);
-        OnBindHost();
+        //serverConnections = new NativeList<NetworkConnection>(4, Allocator.Persistent);
+        //OnBindHost();
 
-        joinCode = await RelayService.Instance.GetJoinCodeAsync(hostAlloc.AllocationId);
+        //joinCode = await RelayService.Instance.GetJoinCodeAsync(hostAlloc.AllocationId);
 
-        Mirror.NetworkManager.singleton.StartHost();
+        //Mirror.NetworkManager.singleton.StartHost();
+        MyNetworkManager.instance.StartRelayHost(4);
         //MyNetworkManager.instance.OnStartHost();
         //Mirror.NetworkManager.singleton.OnClientConnect();
 
-        return joinCode;
+        return String.Empty;
     }
 
     public void OnHostSendMessage()
@@ -239,7 +239,7 @@ public class MatchMaker : MonoBehaviour
     {
         Debug.Log("Player - Connecting to Host's client.");
 
-        Mirror.NetworkManager.singleton.StartClient();
+        //Mirror.NetworkManager.singleton.StartClient();
         clientConnection = playerDriver.Connect();
 
     }
@@ -273,31 +273,32 @@ public class MatchMaker : MonoBehaviour
                 // Handle Connect events.
                 case Type.Connect:
                     Debug.Log("Player connected to the Host");
+                    MyNetworkManager.instance.JoinRelayServer();
 
-                    Mirror.NetworkClient.ready = true;
-                    Mirror.NetworkClient.ConnectHost();
+                    //Mirror.NetworkClient.ready = true;
+                    //Mirror.NetworkClient.ConnectHost();
 
 
-                    // server scene was loaded. now spawn all the objects
-                    NetworkServer.SpawnObjects();
+                    //// server scene was loaded. now spawn all the objects
+                    //NetworkServer.SpawnObjects();
 
-                    // connect client and call OnStartClient AFTER server scene was
-                    // loaded and all objects were spawned.
-                    // DO NOT do this earlier. it would cause race conditions where a
-                    // client will do things before the server is even fully started.
-                    //Debug.Log("StartHostClient called");
-                    //Mirror.NetworkManager.singleton.SetupClient();
-                    if (Mirror.NetworkManager.singleton.runInBackground)
-                        Application.runInBackground = true;
+                    //// connect client and call OnStartClient AFTER server scene was
+                    //// loaded and all objects were spawned.
+                    //// DO NOT do this earlier. it would cause race conditions where a
+                    //// client will do things before the server is even fully started.
+                    ////Debug.Log("StartHostClient called");
+                    ////Mirror.NetworkManager.singleton.SetupClient();
+                    //if (Mirror.NetworkManager.singleton.runInBackground)
+                    //    Application.runInBackground = true;
 
-                    //if (Mirror.NetworkManager.singleton.authenticator != null)
-                    //{
-                    //    Debug.Log($"Authenticatinggggg");
-                    //    Mirror.NetworkManager.singleton.authenticator.OnStartClient();
-                    //    Mirror.NetworkManager.singleton.authenticator.OnClientAuthenticated.AddListener(Mirror.NetworkManager.singleton.OnClientAuthenticated);
-                    //}
-                    Mirror.NetworkManager.singleton.RegisterClientMessages();
-                    
+                    ////if (Mirror.NetworkManager.singleton.authenticator != null)
+                    ////{
+                    ////    Debug.Log($"Authenticatinggggg");
+                    ////    Mirror.NetworkManager.singleton.authenticator.OnStartClient();
+                    ////    Mirror.NetworkManager.singleton.authenticator.OnClientAuthenticated.AddListener(Mirror.NetworkManager.singleton.OnClientAuthenticated);
+                    ////}
+                    //Mirror.NetworkManager.singleton.RegisterClientMessages();
+
 
                     //HostMode.InvokeOnConnected();
 
